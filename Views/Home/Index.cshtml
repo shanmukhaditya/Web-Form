@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using System.Data
+@model IEnumerable<DataRow>
+
+<div class="text-center">
+    <h1 class="display-4">Web Form</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+
+
+<body>
+  <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="FormSubmit">
+        <table>
+            <tr>
+                <td>First Name: </td>
+                <td><input type="text" id="txtFirstName" name="fileForm.firstName"/></td>
+            </tr>
+            <tr>
+                <td>Last Name: </td>
+                <td><input type="text" id="txtLastName" name="fileForm.lastName"/></td>
+            </tr>
+            <tr>
+                <td>Email: </td>
+                <td><input type="text" id="txtEmail" name="fileForm.email"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="file" multiple name = "fileForm.files" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit"/></td>
+            </tr>
+        </table>
+        <hr/>
+       
+    </form>
+    @ViewBag.name
+    @ViewBag.email
+    @ViewBag.message
+<hr/>
+<table class="table table-bordered">
+<thead>
+	  <tr>
+	      <th>ID</th>
+	      <th>Name</th>
+          <th>Email</th>
+          <th>Files</th>
+          <th>Action</th>
+	  </tr>
+</thead>
+<tbody>
+      @{int i =1;}
+	  @foreach (var item in @Model)
+	  {
+	      <tr>
+	          <th scope="row">@i </th>
+              @{i++;}
+	          <td>@string.Join(' ' , item.ItemArray[1], item.ItemArray[2])</td>
+              <td>@item.ItemArray[3]</td>
+              <td>@item.ItemArray[4]</td>
+              <td>
+                  @Html.ActionLink("Edit", "Edit", new { id = item.ItemArray[0], firstName = item.ItemArray[1], lastName = item.ItemArray[2], email = item.ItemArray[3] })
+                  | @Html.ActionLink("Delete", "Delete", new { id = item.ItemArray[0]})
+                  <link rel = "icon" href = "@Url.Content("~/content/update.png")" />
+              </td>
+	      </tr> 
+	  }
+</tbody>
+</table>
+    
+</body>
